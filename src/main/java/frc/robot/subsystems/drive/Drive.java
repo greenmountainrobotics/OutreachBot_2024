@@ -55,6 +55,7 @@ public class Drive extends SubsystemBase {
       new DifferentialDriveKinematics(TRACK_WIDTH);
   private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(KS, KV);
   private final SysIdRoutine sysId;
+  private boolean arcade = false;
 
   /** Creates a new Drive. */
   public Drive(DriveIO io) {
@@ -128,9 +129,13 @@ public class Drive extends SubsystemBase {
   }
 
   /** Run open loop based on stick positions. */
-  public void driveArcade(double xSpeed, double zRotation) {
-    var speeds = DifferentialDrive.arcadeDriveIK(xSpeed, zRotation, true);
-    io.setVoltage(speeds.left * 12.0, speeds.right * 12.0);
+  public void driveArcade(double xSpeed, double zRotation, double rightSpeed) {
+    if (arcade) {
+      var speeds = DifferentialDrive.arcadeDriveIK(xSpeed, zRotation, true);
+      io.setVoltage(speeds.left * 12.0, speeds.right * 12.0);
+    } else {
+      io.setVoltage(xSpeed * 12, rightSpeed * 12);
+    }
   }
 
   /** Stops the drive. */
@@ -141,6 +146,11 @@ public class Drive extends SubsystemBase {
   /** Returns a command to run a quasistatic test in the specified direction. */
   public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
     return sysId.quasistatic(direction);
+  }
+
+  public Command switchDrive() {
+    arcade = !arcade;
+    return null;
   }
 
   /** Returns a command to run a dynamic test in the specified direction. */

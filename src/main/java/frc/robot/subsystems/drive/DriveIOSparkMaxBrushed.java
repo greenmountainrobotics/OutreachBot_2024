@@ -22,10 +22,10 @@ import com.revrobotics.CANSparkMax;
  * "CANSparkFlex".
  */
 public class DriveIOSparkMaxBrushed implements DriveIO {
-  private final CANSparkMax leftLeader = new CANSparkMax(1, MotorType.kBrushed);
+  private final CANSparkMax leftLeader = new CANSparkMax(4, MotorType.kBrushed);
   private final CANSparkMax rightLeader = new CANSparkMax(2, MotorType.kBrushed);
   private final CANSparkMax leftFollower = new CANSparkMax(3, MotorType.kBrushed);
-  private final CANSparkMax rightFollower = new CANSparkMax(4, MotorType.kBrushed);
+  private final CANSparkMax rightFollower = new CANSparkMax(1, MotorType.kBrushed);
 
   public DriveIOSparkMaxBrushed() {
     leftLeader.restoreFactoryDefaults();
@@ -38,8 +38,8 @@ public class DriveIOSparkMaxBrushed implements DriveIO {
     leftFollower.setCANTimeout(250);
     rightFollower.setCANTimeout(250);
 
-    leftLeader.setInverted(false);
-    rightLeader.setInverted(true);
+    leftLeader.setInverted(true);
+    rightLeader.setInverted(false);
     leftFollower.follow(leftLeader, false);
     rightFollower.follow(rightLeader, false);
 

@@ -42,6 +42,7 @@ public class RobotContainer {
   // Subsystems
   private final Drive drive;
   private final Launcher launcher;
+  private boolean aPressed = false;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -121,9 +122,12 @@ public class RobotContainer {
   private void configureButtonBindings() {
     drive.setDefaultCommand(
         Commands.run(
-            () -> drive.driveArcade(-controller.getLeftY(), controller.getLeftX()), drive));
-    controller.leftBumper().whileTrue(launcher.intakeCommand());
-    controller.rightBumper().whileTrue(launcher.launchCommand());
+            () ->
+                drive.driveArcade(
+                    -controller.getLeftY(), controller.getLeftX(), -controller.getRightY()),
+            drive));
+
+    controller.a().toggleOnTrue(drive.switchDrive());
   }
 
   /**

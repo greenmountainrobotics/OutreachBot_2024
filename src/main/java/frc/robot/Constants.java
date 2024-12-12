@@ -36,13 +36,11 @@ public final class Constants {
   }
 
   public static final class CANId {
-    
-    public static final int LeftLeaderId = 1;
-    public static final int LeftFollowerId = 2;
-    public static final int RightLeaderId = 3;
-    public static final int RightFollowerId = 4;
-    public static final int PigeonId = 20;
 
-    
+    public static final int LeftLeaderId = 3;
+    public static final int LeftFollowerId = 4;
+    public static final int RightLeaderId = 1;
+    public static final int RightFollowerId = 2;
+    public static final int PigeonId = 20;
   }
 }

@@ -23,7 +23,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
-import static frc.robot.Constants.CANId;
 
 /**
  * This drive implementation is for Spark Maxes driving NEO motors with a Pigeon 2 gyro. For the
@@ -34,10 +33,10 @@ public class DriveIOSparkMax implements DriveIO {
   private static final double KP = 1.0; // TODO: MUST BE TUNED, consider using REV Hardware Client
   private static final double KD = 0.0; // TODO: MUST BE TUNED, consider using REV Hardware Client
 
-  private final CANSparkMax leftLeader = new CANSparkMax(LeftLeaderId, MotorType.kBrushless);
+  private final CANSparkMax leftLeader = new CANSparkMax(4, MotorType.kBrushless);
   private final CANSparkMax rightLeader = new CANSparkMax(2, MotorType.kBrushless);
   private final CANSparkMax leftFollower = new CANSparkMax(3, MotorType.kBrushless);
-  private final CANSparkMax rightFollower = new CANSparkMax(4, MotorType.kBrushless);
+  private final CANSparkMax rightFollower = new CANSparkMax(1, MotorType.kBrushless);
   private final RelativeEncoder leftEncoder = leftLeader.getEncoder();
   private final RelativeEncoder rightEncoder = rightLeader.getEncoder();
   private final SparkPIDController leftPID = leftLeader.getPIDController();
