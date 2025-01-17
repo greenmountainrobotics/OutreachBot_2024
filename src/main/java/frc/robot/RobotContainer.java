@@ -14,21 +14,15 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIO;
 import frc.robot.subsystems.drive.DriveIOSim;
 import frc.robot.subsystems.drive.DriveIOSparkMaxBrushed;
-import frc.robot.subsystems.launcher.Launcher;
-import frc.robot.subsystems.launcher.LauncherIO;
-import frc.robot.subsystems.launcher.LauncherIOSim;
-import frc.robot.subsystems.launcher.LauncherIOSparkMaxBrushed;
 import frc.robot.util.NoteVisualizer;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -41,7 +35,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   private final Drive drive;
-  private final Launcher launcher;
+  // private final Launcher launcher;
   private boolean aPressed = false;
 
   // Controller
@@ -61,9 +55,9 @@ public class RobotContainer {
         // drive = new Drive(new DriveIOTalonSRX()); // Talon SRX + brushed, no encoders
         // drive = new Drive(new DriveIOTalonFX()); // Talon FX (Falon 500/Kraken X60)
 
-        launcher =
-            new Launcher(
-                new LauncherIOSparkMaxBrushed()); // Spark Max/Spark Flex + brushed, no encoders
+        //  launcher =
+        //      new Launcher(
+        //         new LauncherIOSparkMaxBrushed()); // Spark Max/Spark Flex + brushed, no encoders
         // launcher = new Launcher(new LauncherIOSparkMax()); // Spark Max/Spark Flex + NEO/Vortex
         // launcher = new Launcher(new LauncherIOTalonSRX());  // Talon SRX + brushed, no encoders
         // launcher = new Launcher(new LauncherIOTalonFX()); // Talon FX (Falon 500/Kraken X60)
@@ -72,40 +66,40 @@ public class RobotContainer {
       case SIM:
         // Sim robot, instantiate physics sim IO implementations
         drive = new Drive(new DriveIOSim());
-        launcher = new Launcher(new LauncherIOSim());
+        //  launcher = new Launcher(new LauncherIOSim());
         break;
 
       default:
         // Replayed robot, disable IO implementations
         drive = new Drive(new DriveIO() {});
-        launcher = new Launcher(new LauncherIO() {});
+        //  launcher = new Launcher(new LauncherIO() {});
         break;
     }
 
     // Set up auto routines
-    NamedCommands.registerCommand("Launch", launcher.launchCommand().withTimeout(3.0));
+    //   NamedCommands.registerCommand("Launch", launcher.launchCommand().withTimeout(3.0));
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
-    autoChooser.addOption(
-        "Launch & Leave (No Encoders)",
-        launcher
-            .launchCommand()
-            .withTimeout(3.0)
-            .andThen(
-                Commands.startEnd(() -> drive.driveVolts(-3.0, -3.0), drive::stop, drive)
-                    .withTimeout(3.0)));
+    /*   autoChooser.addOption(
+            "Launch & Leave (No Encoders)",
+            launcher
+                .launchCommand()
+                .withTimeout(3.0)
+                .andThen(
+                    Commands.startEnd(() -> drive.driveVolts(-3.0, -3.0), drive::stop, drive)
+                        .withTimeout(3.0)));
 
-    // Set up SysId routines
-    autoChooser.addOption(
-        "Drive SysId (Quasistatic Forward)",
-        drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-    autoChooser.addOption(
-        "Drive SysId (Quasistatic Reverse)",
-        drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-    autoChooser.addOption(
-        "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
-    autoChooser.addOption(
-        "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-
+        // Set up SysId routines
+        autoChooser.addOption(
+            "Drive SysId (Quasistatic Forward)",
+            drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+        autoChooser.addOption(
+            "Drive SysId (Quasistatic Reverse)",
+            drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+        autoChooser.addOption(
+            "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
+        autoChooser.addOption(
+            "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+    */
     // Set up note visualizer
     NoteVisualizer.setRobotPoseSupplier(drive::getPose);
 
@@ -127,7 +121,7 @@ public class RobotContainer {
                     -controller.getLeftY(), controller.getLeftX(), -controller.getRightY()),
             drive));
 
-    controller.a().toggleOnTrue(drive.switchDrive());
+    // controller.a().toggleOnTrue(drive.switchDrive());
   }
 
   /**
